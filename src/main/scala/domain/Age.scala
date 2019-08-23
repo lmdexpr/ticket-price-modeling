@@ -1,6 +1,6 @@
 package domain
 
-import java.time.{LocalDate, LocalDateTime}
+import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 final case class Age(private val birthday : LocalDate) extends Ordered[Age] {

@@ -14,7 +14,7 @@ final case class Customer(birthDay : LocalDate, certificates : Seq[Certificate])
   private def overAge(threshould : Int)(implicit showTime : LocalDateTime)  : Boolean = age.ageAt(showTime.toLocalDate) <= threshould
   private def underAge(threshould : Int)(implicit showTime : LocalDateTime) : Boolean = age.ageAt(showTime.toLocalDate) >= threshould
 
-  def applicablePlans(implicit showTime : LocalDateTime) : Seq[Plan] = certificates.map(_ match {
+  def applicablePlans(implicit showTime : LocalDateTime) : Seq[Plan] = certificates.map {
     case CinemaCitizen         => if (overAge(60)) Plan.CinemaSenior else Plan.CinemaCitizen
     case UniversityStudent     => Plan.UniversityStudent
     case HighSchoolStudent     => Plan.HighSchoolStudent
@@ -23,5 +23,5 @@ final case class Customer(birthDay : LocalDate, certificates : Seq[Certificate])
     case DisabilityCertificate =>
       if (certificates.contains(HighSchoolStudent) || underAge(12)) Plan.DisabilityStudent
       else Plan.Disability
-  }) :+ (if (overAge(70)) Plan.Senior else if (underAge(12)) Plan.Child else Plan.Adult)
+  } :+ (if (overAge(70)) Plan.Senior else if (underAge(12)) Plan.Child else Plan.Adult)
 }
