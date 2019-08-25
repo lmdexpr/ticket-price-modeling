@@ -6,9 +6,9 @@ import java.time.{LocalDate, LocalDateTime}
 final case class Customer(birthDay : LocalDate, certificates : Seq[Certificate])
 {
   lazy val wasBorn = LocalDate.now().isAfter(birthDay) // 生まれてて欲しい
-  lazy val uniqueStudentCertificate = certificates.contains(UniversityStudent) && certificates.contains(HighSchoolStudent) // 同時に大学生であり高校生であることはない
+  lazy val illegalStudentCertificate = certificates.contains(UniversityStudent) && certificates.contains(HighSchoolStudent) // 同時に大学生であり高校生であることはない
 
-  require(wasBorn && uniqueStudentCertificate)
+  require(wasBorn && !illegalStudentCertificate)
 
   val age : Age = Age(birthDay)
   private def overAge(threshould : Int)(implicit showTime : LocalDateTime)  : Boolean = age.ageAt(showTime.toLocalDate) <= threshould
