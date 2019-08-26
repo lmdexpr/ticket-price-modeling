@@ -11,8 +11,8 @@ final case class Customer(birthDay : LocalDate, certificates : Seq[Certificate])
   require(wasBorn && !illegalStudentCertificate)
 
   val age : Age = Age(birthDay)
-  private def overAge(threshould : Int)(implicit showTime : LocalDateTime)  : Boolean = age.ageAt(showTime.toLocalDate) <= threshould
-  private def underAge(threshould : Int)(implicit showTime : LocalDateTime) : Boolean = age.ageAt(showTime.toLocalDate) >= threshould
+  private def overAge(threshould : Int)(implicit showTime : LocalDateTime)  : Boolean = age.ageAt(showTime.toLocalDate) >= threshould
+  private def underAge(threshould : Int)(implicit showTime : LocalDateTime) : Boolean = age.ageAt(showTime.toLocalDate) <= threshould
 
   def applicablePlans(implicit showTime : LocalDateTime) : Seq[Plan] = certificates.map {
     case CinemaCitizen         => if (overAge(60)) Plan.CinemaSenior else Plan.CinemaCitizen

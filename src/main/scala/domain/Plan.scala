@@ -6,7 +6,7 @@ sealed case class Plan(weekday : Price, weekdayLate : Price, holiday : Price, ho
 {
   def price(showTime : LocalDateTime) : Price = {
     val isHoliday     = Seq(DayOfWeek.SUNDAY, DayOfWeek.SATURDAY) contains showTime.getDayOfWeek
-    val daytimeOrLate = if (showTime.getHour >= 20) (_ : Price) else (_ : Price)
+    val daytimeOrLate = if (showTime.getHour <= 20) (_ : Price) else (_ : Price)
 
     if (showTime.getDayOfMonth == 1 && movieDay.isDefined) movieDay.get
     else if (isHoliday) daytimeOrLate(holiday, holidayLate)
